@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_02_203640) do
+ActiveRecord::Schema.define(version: 2022_06_10_000754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,53 @@ ActiveRecord::Schema.define(version: 2022_06_02_203640) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "username", limit: 25
     t.index ["username"], name: "index_admin_users_on_username"
+  end
+
+  create_table "admin_users_pages", id: false, force: :cascade do |t|
+    t.integer "admin_user_id"
+    t.integer "page_id"
+    t.index ["admin_user_id", "page_id"], name: "index_admin_users_pages_on_admin_user_id_and_page_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.integer "subject_id"
+    t.string "name"
+    t.string "permalink"
+    t.integer "position"
+    t.boolean "visible", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["permalink"], name: "index_pages_on_permalink"
+    t.index ["subject_id"], name: "index_pages_on_subject_id"
+  end
+
+  create_table "section_edits", force: :cascade do |t|
+    t.integer "admin_user_id"
+    t.integer "section_id"
+    t.string "summary"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id", "section_id"], name: "index_section_edits_on_admin_user_id_and_section_id"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.integer "page_id"
+    t.string "name"
+    t.integer "position"
+    t.boolean "visible", default: false
+    t.string "content_type"
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["page_id"], name: "index_sections_on_page_id"
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.boolean "visible", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
