@@ -21,4 +21,8 @@ class DemoController < ApplicationController
     redirect_to('http://lynda.com')
   end
 
+  def escape_output
+
+  end
+
 end
