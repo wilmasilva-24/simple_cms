@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  root 'demo#index'
+  
+  get 'admin', :to => 'access#menu'
+  get 'access/menu'
+  get 'access/login'
+  post 'access/attempt_login'
+  get 'access/logout'
   get 'sections/index'
   get 'sections/show'
   get 'sections/new'
@@ -9,7 +16,6 @@ Rails.application.routes.draw do
   get 'pages/new'
   get 'pages/edit'
   get 'pages/delete'
-  root 'demo#index'
   
   resources :subjects do
     member do
